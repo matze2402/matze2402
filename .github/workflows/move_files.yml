@@ -20,7 +20,7 @@ jobs:
           mkdir -p temp_folder  # Create the new folder if it doesn't exist
           for file in $(git diff --name-only --diff-filter=A origin/main ./pages/Testpurpose/*.md); do
             filename=$(basename "$file")
-            cp "$file" "temp_folder/$filename"
+            cp "$file" temp_folder/
           done
           
       - name: Check if Files Copied
