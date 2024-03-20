@@ -18,4 +18,4 @@ jobs:
 
       - name: Copy files to new folder
         run: |
-          find Testpurpose -type f -exec cp {} new_folder/ \;
+          find ./Testpurpose -type f -exec cp {} ./new_folder/ \;
