@@ -27,7 +27,7 @@ jobs:
           cd myyyy
           git config --local user.email "action@github.com"
           git config --local user.name "matze2402"
-          git config --global url.https://${{ secrets.token}}@github.com/.insteadOf https://github.com/
+          git config --global url.https://${{ secrets.admin}}@github.com/.insteadOf https://github.com/
           git add .
           git commit -m "Add .md files from source repository"
           git push
