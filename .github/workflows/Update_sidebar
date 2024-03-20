@@ -1,11 +1,8 @@
 name: Update Sidebar
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'pages/Testpurpose/*.md'
+   repository_dispatch:
+    types: [push-md]
 
 jobs:
   update_sidebar:
