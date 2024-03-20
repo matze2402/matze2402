@@ -5,7 +5,7 @@ on:
     branches:
       - main  # Change this to your main branch name if needed
     paths:
-      - 'path/to/source/folder/*.md'  # Specify the path to monitor for changes
+      - 'pages/Testpurpose/*.md'  # Specify the path to monitor for changes
 
 jobs:
   move_markdown_files:
