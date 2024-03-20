@@ -23,6 +23,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "matze2402"
-          git add sidebar_content.md
+          git add ./_data/sidebars/mydoc_sidebar.yml
           git commit -m "Update sidebar content"
           git push
