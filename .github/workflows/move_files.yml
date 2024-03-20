@@ -16,4 +16,4 @@ jobs:
     - name: Copy files
       run: |
         mkdir -p destination_folder  # Create destination folder if not exists
-        cp -r ./pages/Testpurpose/. destination_folder/
+        cp -r /pages/Testpurpose/. destination_folder/
