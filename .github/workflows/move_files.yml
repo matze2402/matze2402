@@ -14,8 +14,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create new folder
-        run: mkdir new_folder
+        run: mkdir -p destination_folder
 
       - name: Copy files to new folder
         run: |
-          find ./Testpurpose -type f -exec cp {} ./new_folder/ \;
+          find ./Testpurpose -type f -exec cp {} ./destination_folder/ \;
