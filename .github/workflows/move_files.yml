@@ -34,9 +34,4 @@ jobs:
           git commit -m "Add .md files from source repository"
           git push
 
-      - name: Dispatch trigger for pushing
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ secrets.ADMIN }}
-          repository: Matze2402/temp_repo
-          event-type: push-md   
+      
