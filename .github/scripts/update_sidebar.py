@@ -1,7 +1,7 @@
 import os
 import yaml
 
-folder_path = "./pages/Testpurpose"
+folder_path = "./Testpurpose"
 sidebar_path = "./_data/sidebars/mydoc_sidebar.yml"
 
 def update_sidebar(folder_path, sidebar_path):
