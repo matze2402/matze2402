@@ -1,0 +1,28 @@
+name: Delete files and create empty folder
+
+on:
+ repository_dispatch:
+    types: [delete]
+
+jobs:
+  delete_files_and_create_folder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Delete Folder
+        run: |
+         rm -rf temp_folder
+
+      # Commit changes job
+      - name: Commit changes
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "matze2402"
+          git config --global url.https://${{ secrets.admin }}@github.com/.insteadOf https://github.com/
+          git add -A
+          git commit -m "Delete all files from specified folder and create empty folder $FOLDER_NAME"
+          git push
+
+       
