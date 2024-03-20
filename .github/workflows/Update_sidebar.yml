@@ -16,7 +16,7 @@ jobs:
         run: |
           python .github/scripts/update_sidebar.py
 
-      - name: Commit and Push Changes
+      - name: Commit and Push Changes 
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "matze2402"
@@ -25,7 +25,7 @@ jobs:
           git commit -m "Update sidebar content"
           git push
 
-     - name: Dispatch trigger for pushing
+      - name: Dispatch trigger for pushing
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.ADMIN }}
