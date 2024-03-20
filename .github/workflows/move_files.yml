@@ -25,3 +25,10 @@ jobs:
           git add .
           git commit -m "Copy file.txt to new_folder/"
           git push origin main  # Push changes to the main branch
+
+      - name: Dispatch trigger for pushing
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.admin }}
+          repository: Matze2402/temp_repo
+          event-type: push-md   
