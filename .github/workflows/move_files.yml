@@ -5,7 +5,7 @@ on:
     branches:
       - main
 
-paths:
+ paths:
     - 'Testpurpose/*.md'
 
 jobs:
