@@ -1,12 +1,12 @@
-name: Push New Files to Another Repository
+name: Push MD Files to Another Repository
 
 on:
   push:
     branches:
-      - main  # Adjust as needed
+      - main
 
 jobs:
-  push-new-files:
+  push-md-files:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,29 +15,18 @@ jobs:
 
       - name: Clone target repository
         run: git clone https://github.com/matze2402/myyyy.git myyyy
-        # Replace 'yourusername' with your GitHub username and 'target-repo' with the name of your target repository
+        # Replace 'yourusername' with your GitHub username and 'myyyy' with the name of your target repository
 
-      - name: Identify new files
-        id: new-files
+      - name: Copy .md files to target repository
         run: |
-          find Testpurpose/ -type f -printf '%f\n' > source_files.txt
-          cd myyyy/fin || exit
-          find . -type f -printf '%f\n' > target_files.txt
-          comm -23 <(sort ../source_files.txt) <(sort target_files.txt) > new_files.txt
+          mkdir -p myyyy/fin
+          cp Testpurpose/*.md target_repo/fin/
 
-      - name: Copy new files to target repository
+      - name: Commit and push .md files to target repository
         run: |
-          while IFS= read -r file; do
-            cp "Testpurpose/$file" "myyyy/fin/$file"
-          done < myyyy/new_files.txt
-
-      - name: Commit and push new files to target repository
-        if: steps.new-files.outputs.stdout != ''
-        run: |
-          cd next_repo
+          cd myyyy
           git config --local user.email "action@github.com"
-          git config --local user.name "matze2402"
-          git config --global url.https://${{ secrets.admin}}@github.com/.insteadOf https://github.com/
+          git config --local user.name "yourusername"
           git add .
-          git commit -m "Add new files from source repository"
+          git commit -m "Add .md files from source repository"
           git push
