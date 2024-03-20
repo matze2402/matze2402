@@ -29,7 +29,7 @@ jobs:
         run: |
           while IFS= read -r file; do
             cp "Testpurpose/$file" "myyyy/fin/$file"
-          done < next_repo/new_files.txt
+          done < myyyy/new_files.txt
 
       - name: Commit and push new files to target repository
         if: steps.new-files.outputs.stdout != ''
