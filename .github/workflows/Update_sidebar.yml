@@ -23,7 +23,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "matze2402"
-          git config --global url.https://${{ secrets.admin}}@github.com/.insteadOf https://github.com/
+          git config --global url.https://${{ secrets.admin }}@github.com/.insteadOf https://github.com/
           git add ./_data/sidebars/mydoc_sidebar.yml
           git commit -m "Update sidebar content"
           git push
