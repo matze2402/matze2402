@@ -1,8 +1,11 @@
 name: Update Sidebar
 
 on:
-   repository_dispatch:
-    types: [push-md]
+  push:
+    branches:
+      - new_Branch
+    paths:
+      - 'destination_folder/*.md'  # Update folder name
 
 jobs:
   update_sidebar:
