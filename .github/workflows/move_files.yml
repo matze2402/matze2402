@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main  # Change this to your main branch name if needed
+    paths:
+      - 'pages/Testpurpose/*.md'
 
 jobs:
   copy_files:
@@ -16,7 +18,7 @@ jobs:
       - name: Copy Files
         run: |
           mkdir temp_folder  # Create a new folder if it doesn't exist
-          cp pages/Testpurpose/*.md new_folder/  # Copy file.txt to the new folder
+          cp pages/Testpurpose/*.md temp_folder/  # Copy file.txt to the new folder
           git config --global user.email "you@example.com"  # Configure git user email
           git config --global user.name "Your Name"  # Configure git user name
           git config --global url.https://${{ secrets.admin }}@github.com/.insteadOf https://github.com/
