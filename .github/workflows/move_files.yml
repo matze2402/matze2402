@@ -14,22 +14,23 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-        
+
+      - name: Create New Folder
+        run: mkdir -p copied_md_files  # Create the new folder if it doesn't exist
+
       - name: Copy New Markdown Files
         run: |
-          mkdir -p temp_folder  # Create the new folder if it doesn't exist
-          for file in $(git diff --name-only --diff-filter=A origin/main ./pages/Testpurpose/*.md); do
-            filename=$(basename "$file")
-            cp "$file" temp_folder/
+          for file in $(git diff --name-only --diff-filter=A origin/main pages/Testpurpose/*.md); do
+            cp "$file" copied_md_files/
           done
-          
+
       - name: Check if Files Copied
         run: |
-          if [[ -n $(git status --porcelain) ]]; then
+          if [[ -n $(ls copied_md_files/*.md 2>/dev/null) ]]; then
             git config --global user.email "you@example.com"  # Configure git user email
             git config --global user.name "Your Name"  # Configure git user name
             git config --global url.https://${{ secrets.admin }}@github.com/.insteadOf https://github.com/
-            git add .
+            git add copied_md_files/
             git commit -m "Copied new Markdown files to copied_md_files/"
             git push origin main  # Push changes to the main branch
           fi
