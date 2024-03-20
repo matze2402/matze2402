@@ -17,7 +17,7 @@ jobs:
 
       - name: Generate Sidebar
         run: |
-          python generate_sidebar.py
+          python .github/scripts/update_sidebar.py
 
       - name: Commit and Push Changes
         run: |
