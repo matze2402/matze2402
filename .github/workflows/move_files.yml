@@ -18,7 +18,7 @@ jobs:
       - name: Copy New Markdown Files
         run: |
           mkdir -p temp_folder  # Create the new folder if it doesn't exist
-          for file in $(git diff --name-only --diff-filter=A origin/main pages/Testpurpose/*.md); do
+          for file in $(git diff --name-only --diff-filter=A origin/main ./pages/Testpurpose/*.md); do
             filename=$(basename "$file")
             cp "$file" "temp_folder/$filename"
           done
