@@ -8,29 +8,28 @@ on:
       - 'pages/Testpurpose/*.md'  # Specify the path to monitor for changes
 
 jobs:
-  move_markdown_files:
+  copy_markdown_files:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
         
-      - name: Move New Markdown Files
+      - name: Copy New Markdown Files
         run: |
-          mkdir -p temp_folder  # Create the temp_folder if it doesn't exist
-          for file in ./pages/Testpurpose/*.md ; do
-            if [[ -e $file ]]; then
-              mv "$file" temp_folder/
-            fi
+          mkdir -p temp_folder  # Create the new folder if it doesn't exist
+          for file in $(git diff --name-only --diff-filter=A origin/main pages/Testpurpose/*.md); do
+            filename=$(basename "$file")
+            cp "$file" "temp_folder/$filename"
           done
           
-      - name: Check if Files Moved
+      - name: Check if Files Copied
         run: |
           if [[ -n $(git status --porcelain) ]]; then
             git config --global user.email "you@example.com"  # Configure git user email
-            git config --global user.name "matze2402"  # Configure git user name
-            git config --global url.https://${{ secrets.admin }}@github.com/.insteadOf https://github.com/ 
+            git config --global user.name "Your Name"  # Configure git user name
+            git config --global url.https://${{ secrets.admin }}@github.com/.insteadOf https://github.com/
             git add .
-            git commit -m "Moved new Markdown files from pages folder to temp_folder/"
+            git commit -m "Copied new Markdown files to copied_md_files/"
             git push origin main  # Push changes to the main branch
           fi
