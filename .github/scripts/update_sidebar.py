@@ -1,27 +1,31 @@
 import os
 import yaml
 
-# Path to the folder containing the files for the sidebar
-folder_path = './pages/Testpurpose'  # Update this with your folder path
+folder_path = "./pages/Testpurpose"
+sidebar_path = "./_data/sidebars/mydoc_sidebar.yml"
 
-# Path to the YAML file where the sidebar content will be written
-sidebar_file_path = './_data/sidebars/mydoc_sidebar.yml'  # Update this with your desired sidebar file path
-
-def generate_sidebar():
-    # Fetch the list of files in the folder
+def update_sidebar(folder_path, sidebar_path):
+    # Get a list of files in the folder
     files = os.listdir(folder_path)
+    print("Files in folder:", files)
 
-    # Filter out directories, if any
-    files = [f for f in files if os.path.isfile(os.path.join(folder_path, f))]
+    # Update the sidebar configuration
+    with open(sidebar_path, 'r') as f:
+        sidebar = yaml.safe_load(f)
+    print("Original sidebar content:", sidebar)
 
-    # Convert the list of files to a dictionary suitable for YAML
-    sidebar_content = [{'title': file, 'url': file} for file in files]
+    # Append new items to the sidebar
+    for file in files:
+        # Create a dictionary for the new item
+        new_item = {"title": file, "url": f"/pages/Testpurpose/{file}", "output": "web, pdf"}
 
-    # Write the sidebar content to the YAML file
-    with open(sidebar_file_path, 'w') as sidebar_file:
-        yaml.dump(sidebar_content, sidebar_file, default_flow_style=False)
+        # Append the new item to the appropriate section
+        sidebar['entries'][-1]['folders'][-1]['folderitems'].append(new_item)
 
-    print(f"Sidebar content generated and saved to '{sidebar_file_path}'")
+    # Save the updated sidebar
+    with open(sidebar_path, 'w') as f:
+        yaml.dump(sidebar, f, default_flow_style=False)
+    print("Updated sidebar content:", sidebar)
+    print("Sidebar updated and saved successfully.")
 
-if __name__ == "__main__":
-    generate_sidebar()
+update_sidebar(folder_path, sidebar_path)
