@@ -1,21 +1,19 @@
-name: Move New Markdown Files
+name: Copy Files
 
 on:
   push:
     branches:
-      - main  # Change this to your main branch name if needed
-    #paths:
-      #- 'pages/Testpurpose/*.md'  # Specify the path to monitor for changes
+      - main  # Change this to the branch you want to trigger the action
 
 jobs:
-  copy_markdown_files:
+  copy_files:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Create New Folder
-        run: mkdir -p copied_md_files  # Create the new folder if it doesn't exist
-
+    - name: Checkout repository
+      uses: actions/checkout@v2
       
+    - name: Copy files
+      run: |
+        mkdir -p destination_folder  # Create destination folder if not exists
+        cp -r ./pages/Testpurpose/. destination_folder/
