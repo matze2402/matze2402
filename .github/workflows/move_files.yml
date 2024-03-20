@@ -20,7 +20,7 @@ jobs:
       - name: Copy .md files to target repository
         run: |
           mkdir -p myyyy/fin
-          cp Testpurpose/*.md target_repo/fin/
+          cp Testpurpose/*.md myyyy/fin/
 
       - name: Commit and push .md files to target repository
         run: |
