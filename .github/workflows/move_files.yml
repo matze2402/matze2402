@@ -15,22 +15,22 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
         
-      - name: List New Markdown Files
-        id: list_new_md_files
-        run: |
-          mkdir -p temp_folder  # Create the temp_folder if it doesn't exist
-          git diff --name-only --diff-filter=A origin/main ./pages/Testpurpose/*.md > new_md_files.txt
-          echo "::set-output name=new_md_files::$(cat new_md_files.txt)"
-      
       - name: Move New Markdown Files
         run: |
-          while IFS= read -r file; do
-            mkdir -p "temp_folder/$(dirname "$file")"
-            mv "$file" "temp_folder/$file"
-          done < new_md_files.txt
-          git config --global user.email "you@example.com"  # Configure git user email
-          git config --global user.name "Matze2402"  # Configure git user name
-          git config --global url.https://${{ secrets.admin }}@github.com/.insteadOf https://github.com/
-          git add .
-          git commit -m "Moved new Markdown files from source folder to temp_folder/"
-          git push origin main  # Push changes to the main branch
+          mkdir -p temp_folder  # Create the temp_folder if it doesn't exist
+          for file in ./pages/Testpurpose/*.md ; do
+            if [[ -e $file ]]; then
+              mv "$file" temp_folder/
+            fi
+          done
+          
+      - name: Check if Files Moved
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            git config --global user.email "you@example.com"  # Configure git user email
+            git config --global user.name "matze2402"  # Configure git user name
+            git config --global url.https://${{ secrets.admin }}@github.com/.insteadOf https://github.com/ 
+            git add .
+            git commit -m "Moved new Markdown files from pages folder to temp_folder/"
+            git push origin main  # Push changes to the main branch
+          fi
