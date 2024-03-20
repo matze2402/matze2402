@@ -1,21 +1,43 @@
-name: Copy Files
+name: Push New Files to Another Repository
 
 on:
   push:
     branches:
-      - main
+      - main  # Adjust as needed
 
 jobs:
-  copy_files:
+  push-new-files:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Create new folder
-        run: mkdir -p destination_folder
+      - name: Clone target repository
+        run: git clone https://github.com/matze2402/myyyy.git myyyy
+        # Replace 'yourusername' with your GitHub username and 'target-repo' with the name of your target repository
 
-      - name: Copy files to new folder
+      - name: Identify new files
+        id: new-files
         run: |
-          find Testpurpose -type f -name "*.md" -exec cp {} destination_folder/ \;
+          find Testpurpose/ -type f -printf '%f\n' > source_files.txt
+          cd myyyy/fin || exit
+          find . -type f -printf '%f\n' > target_files.txt
+          comm -23 <(sort ../source_files.txt) <(sort target_files.txt) > new_files.txt
+
+      - name: Copy new files to target repository
+        run: |
+          while IFS= read -r file; do
+            cp "Testpurpose/$file" "myyyy/fin/$file"
+          done < next_repo/new_files.txt
+
+      - name: Commit and push new files to target repository
+        if: steps.new-files.outputs.stdout != ''
+        run: |
+          cd next_repo
+          git config --local user.email "action@github.com"
+          git config --local user.name "matze2402"
+          git config --global url.https://${{ secrets.admin}}@github.com/.insteadOf https://github.com/
+          git add .
+          git commit -m "Add new files from source repository"
+          git push
